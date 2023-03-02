@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+
+{% block body%}
+
+<body>
+<div class="col-md-3 m-auto bg-light p-4">
+    <h3 class="m-4">Login</h3>
+    <form method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Login</button>
+        </div>
+    </form>
+   <div class="my-2">Don't have account? <a href="/register">Regiser</a>  here</div>
+
+
+</div>
+
+</body>
+{% endblock%}

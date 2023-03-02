@@ -1,0 +1,114 @@
+
+{% extends 'base.html'%}
+{% block title %} HR Dashboard{% endblock%}
+{% block body %}
+<style>
+    .box{
+        transition:5s;
+        height: 290px;
+        overflow: hidden;
+        box-shadow: 0px 3px 7px 2px #84c7f1;
+        cursor: pointer;
+        position:relative;
+    }
+    .box img{
+        transition:5s;
+        cursor:pinter;
+    }
+    .box:hover img{
+        transform: scale(1.5);
+    }
+    .description{
+        z-index: 99999;
+    position: absolute;
+    top: 0;
+    background: #fff;
+    width: 100%;
+    left: 0;
+    text-align: center;
+
+
+    }
+</style>
+  <div class="min-height-300 bg-primary position-absolute w-100"></div>
+
+
+
+<div class="container mt-3">
+  <h2>Dashboard</h2>
+  <div class="mt-4 p-5 bg-light rounded">
+      <h1>Hey, <span class="text-success">{{request.user.name}}</span>! <a href="/logout" class="btn btn-danger">logout</a>
+    </h1>
+    <p>Email:{{request.user}}</p>
+      <p>You are logged in as <i class="text-lowercase text-primary">{{request.user.user_type}}</i></p>
+
+
+  </div>
+</div>
+
+
+<div class="container my-3">
+    <button type="button" class="btn btn-primary float-right" data-bs-toggle="modal" data-bs-target="#myModal">
+  + Add Gallery
+</button>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add a New Gallary Here</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+         <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+
+            <button type="submit" class="btn btn-success">Save Gallery</button>
+
+    </form>
+      </div>
+
+      <!-- Modal footer -->
+
+
+    </div>
+  </div>
+</div>
+<div class="container mb-5">
+
+    <div class="row">
+        {% for gal in gallery%}
+        <div class="col-md-3 mb-4">
+            <div class="card box">
+                 <div class="card-header">
+                    <div class="description">
+                    <p>Uploaded by : <span>{{gal.user.name}}</span>! It's a <i class="text-primary">{{gal.user.user_type}}.</i></p>
+
+                </div>
+                </div>
+                <div class="card-body">
+                    <img src="/media/{{gal.image}}" width="100%">
+                </div>
+
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+{% endblock%}
+{% block js %}
+<script>
+  $("#room_list").load("/task/room/")
+</script>
+{% endblock%}
